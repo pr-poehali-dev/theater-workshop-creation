@@ -47,22 +47,46 @@ function Index() {
 
   const groups = [
     {
-      name: 'Детская группа',
-      age: '10-14 лет',
+      name: 'Арлекино',
+      age: '10-15 лет',
       time: 'Суббота 10:00-12:00',
-      price: '3000₽/месяц'
+      price: '3000₽/месяц',
+      description: 'Развиваем творческие способности и уверенность в себе'
     },
     {
-      name: 'Подростковая группа',
-      age: '15-17 лет',
+      name: 'Движ',
+      age: '15-21 год',
       time: 'Воскресенье 14:00-16:00',
-      price: '3500₽/месяц'
+      price: '3500₽/месяц',
+      description: 'Актерское мастерство и эмоциональная выразительность'
     },
     {
-      name: 'Взрослая группа',
-      age: '18+ лет',
+      name: 'Браво',
+      age: '21+ лет',
       time: 'Среда 19:00-21:00',
-      price: '4000₽/месяц'
+      price: '4000₽/месяц',
+      description: 'Профессиональное развитие и глубокая работа с ролью'
+    }
+  ];
+
+  const schedule = [
+    {
+      day: 'Среда',
+      time: '19:00-21:00',
+      group: 'Браво (21+)',
+      activity: 'Работа с текстом, импровизация'
+    },
+    {
+      day: 'Суббота',
+      time: '10:00-12:00',
+      group: 'Арлекино (10-15)',
+      activity: 'Движение, речь, игры'
+    },
+    {
+      day: 'Воскресенье',
+      time: '14:00-16:00',
+      group: 'Движ (15-21)',
+      activity: 'Актерские этюды, эмоции'
     }
   ];
 
@@ -222,6 +246,7 @@ function Index() {
                   <CardTitle className="font-heading text-2xl text-center">{group.name}</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
+                  <p className="text-gray-600 mb-4">{group.description}</p>
                   <div className="flex items-center space-x-3">
                     <Icon name="Users" className="text-yellow-600" size={20} />
                     <span className="font-semibold">Возраст: {group.age}</span>
@@ -230,7 +255,7 @@ function Index() {
                     <Icon name="Clock" className="text-yellow-600" size={20} />
                     <span>{group.time}</span>
                   </div>
-                  <div className="flex items-center space-x-3">
+                  <div className="flex items-center space-x-3 mb-4">
                     <Icon name="CreditCard" className="text-yellow-600" size={20} />
                     <span className="text-xl font-bold text-black">{group.price}</span>
                   </div>
@@ -340,21 +365,172 @@ function Index() {
         </div>
       )}
 
-      {/* Other sections placeholder */}
-      {(activeSection === 'schedule' || activeSection === 'teacher' || activeSection === 'gallery') && (
-        <div className="container mx-auto px-4 py-16 text-center">
-          <h2 className="text-4xl font-heading font-bold mb-8 text-black">
-            {navigation.find(item => item.id === activeSection)?.label}
+      {/* Schedule Section */}
+      {activeSection === 'schedule' && (
+        <div className="container mx-auto px-4 py-16">
+          <h2 className="text-4xl font-heading font-bold text-center mb-12 text-black">
+            Расписание занятий
           </h2>
-          <p className="text-xl text-gray-600 mb-8">
-            Раздел в разработке
-          </p>
-          <Button 
-            onClick={() => setActiveSection('home')}
-            className="bg-yellow-400 text-black hover:bg-yellow-500"
-          >
-            Вернуться на главную
-          </Button>
+          <div className="max-w-4xl mx-auto">
+            <div className="grid gap-6">
+              {schedule.map((item, index) => (
+                <Card key={index} className="border-2 hover:border-yellow-400 transition-colors">
+                  <CardContent className="p-6">
+                    <div className="grid md:grid-cols-4 gap-4 items-center">
+                      <div className="text-center md:text-left">
+                        <h3 className="text-2xl font-heading font-bold text-black">{item.day}</h3>
+                        <p className="text-yellow-600 font-semibold text-lg">{item.time}</p>
+                      </div>
+                      <div className="text-center md:text-left">
+                        <h4 className="text-xl font-semibold text-black">{item.group}</h4>
+                      </div>
+                      <div className="text-center md:text-left md:col-span-1">
+                        <p className="text-gray-700">{item.activity}</p>
+                      </div>
+                      <div className="text-center md:text-right">
+                        <Button 
+                          onClick={() => setActiveSection('contacts')}
+                          className="bg-yellow-400 text-black hover:bg-yellow-500 font-semibold"
+                        >
+                          Записаться
+                        </Button>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+            
+            <div className="mt-12 bg-black rounded-lg p-8 text-center">
+              <h3 className="text-2xl font-heading font-bold text-white mb-4">
+                Индивидуальные занятия
+              </h3>
+              <p className="text-white mb-6">
+                Персональный подход и гибкий график по договоренности
+              </p>
+              <div className="flex justify-center items-center space-x-6">
+                <div className="text-yellow-400">
+                  <Icon name="User" size={32} />
+                  <p className="mt-2 font-semibold">1 на 1</p>
+                </div>
+                <div className="text-yellow-400">
+                  <Icon name="Clock" size={32} />
+                  <p className="mt-2 font-semibold">Гибкий график</p>
+                </div>
+                <div className="text-yellow-400">
+                  <Icon name="Target" size={32} />
+                  <p className="mt-2 font-semibold">Личные цели</p>
+                </div>
+              </div>
+              <Button 
+                onClick={() => setActiveSection('contacts')}
+                className="mt-6 bg-yellow-400 text-black hover:bg-yellow-500 px-8 py-3 font-semibold"
+              >
+                Узнать подробности
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Teacher Section */}
+      {activeSection === 'teacher' && (
+        <div className="container mx-auto px-4 py-16">
+          <h2 className="text-4xl font-heading font-bold text-center mb-12 text-black">
+            Преподаватель
+          </h2>
+          <div className="max-w-4xl mx-auto">
+            <Card className="border-2 border-yellow-400">
+              <CardContent className="p-8">
+                <div className="grid md:grid-cols-2 gap-8 items-center">
+                  <div className="text-center">
+                    <div className="bg-yellow-400 rounded-full p-8 w-48 h-48 mx-auto flex items-center justify-center mb-6">
+                      <Icon name="User" size={80} className="text-black" />
+                    </div>
+                    <h3 className="text-3xl font-heading font-bold text-black mb-2">
+                      Оксана Баранова
+                    </h3>
+                    <p className="text-yellow-600 font-semibold text-lg">
+                      Режиссер, актриса, педагог
+                    </p>
+                  </div>
+                  
+                  <div className="space-y-6">
+                    <div>
+                      <h4 className="text-xl font-semibold text-black mb-3 flex items-center">
+                        <Icon name="GraduationCap" className="text-yellow-600 mr-3" size={24} />
+                        Образование
+                      </h4>
+                      <p className="text-gray-700">
+                        ВГИК, мастерская В.П. Фокина. Дополнительное образование в области психологии и педагогики.
+                      </p>
+                    </div>
+                    
+                    <div>
+                      <h4 className="text-xl font-semibold text-black mb-3 flex items-center">
+                        <Icon name="Award" className="text-yellow-600 mr-3" size={24} />
+                        Опыт работы
+                      </h4>
+                      <p className="text-gray-700">
+                        Более 15 лет работы в театре и кино. Постановка спектаклей, работа с актерами разных возрастов.
+                      </p>
+                    </div>
+                    
+                    <div>
+                      <h4 className="text-xl font-semibold text-black mb-3 flex items-center">
+                        <Icon name="Heart" className="text-yellow-600 mr-3" size={24} />
+                        Философия преподавания
+                      </h4>
+                      <p className="text-gray-700">
+                        "Театр — это место, где человек может открыть себя настоящего. Моя задача — помочь каждому ученику найти свою уникальность и поверить в свои силы."
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      )}
+
+      {/* Gallery Section */}
+      {activeSection === 'gallery' && (
+        <div className="container mx-auto px-4 py-16">
+          <h2 className="text-4xl font-heading font-bold text-center mb-12 text-black">
+            Галерея
+          </h2>
+          <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+            {[1, 2, 3, 4, 5, 6].map((index) => (
+              <Card key={index} className="border-2 hover:border-yellow-400 transition-colors overflow-hidden">
+                <div className="bg-gray-200 h-64 flex items-center justify-center">
+                  <Icon name="Camera" size={48} className="text-gray-400" />
+                </div>
+                <CardContent className="p-4">
+                  <h4 className="font-semibold text-black mb-2">
+                    {index <= 2 ? `Группа "Арлекино"` : 
+                     index <= 4 ? `Группа "Движ"` : `Группа "Браво"`}
+                  </h4>
+                  <p className="text-gray-600 text-sm">
+                    {index % 3 === 1 ? 'Упражнения на развитие пластики' :
+                     index % 3 === 2 ? 'Работа с эмоциями и текстом' : 
+                     'Импровизация и творческие этюды'}
+                  </p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+          
+          <div className="text-center mt-12">
+            <p className="text-gray-600 mb-6">
+              Хотите увидеть, как проходят занятия? Приходите на открытый урок!
+            </p>
+            <Button 
+              onClick={() => setActiveSection('contacts')}
+              className="bg-yellow-400 text-black hover:bg-yellow-500 px-8 py-3 font-semibold"
+            >
+              Записаться на открытый урок
+            </Button>
+          </div>
         </div>
       )}
     </div>
